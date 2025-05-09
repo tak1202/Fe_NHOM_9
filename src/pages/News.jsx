@@ -27,8 +27,8 @@ const newsData = [
     description:
       'Elon Musk đã chia sẻ về những thói quen giúp ông đạt được thành công vang dội trong kinh doanh và công nghệ.',
     likes: 128,
-    commentsEnabled: false,
-    sharesEnabled: false,
+    commentsEnabled: true,
+    sharesEnabled: true,
   },
   {
     id: 3,
@@ -40,8 +40,8 @@ const newsData = [
     description:
       'Thủ tướng đã có buổi gặp gỡ với đại diện 20 trường đại học hàng đầu Mỹ để thảo luận về hợp tác giáo dục...',
     likes: 75,
-    commentsEnabled: false,
-    sharesEnabled: false,
+    commentsEnabled: true,
+    sharesEnabled: true,
   },
   {
     id: 4,
@@ -53,8 +53,8 @@ const newsData = [
     description:
       'Một số chính sách mới sẽ có hiệu lực từ tháng 4, ảnh hưởng đến nhiều lĩnh vực trong đời sống xã hội.',
     likes: 87,
-    commentsEnabled: false,
-    sharesEnabled: false,
+    commentsEnabled: true,
+    sharesEnabled: true,
   },
   {
     id: 5,
@@ -67,7 +67,7 @@ const newsData = [
       'Phong cách thời trang của phụ nữ sau tuổi 40 nên chú trọng vào sự thanh lịch và tinh tế...',
     likes: 210,
     commentsEnabled: true,
-    sharesEnabled: false,
+    sharesEnabled: true,
   },
   {
     id: 6,
@@ -79,8 +79,8 @@ const newsData = [
     description:
       'Trò chơi xây dựng thành phố mới hứa hẹn mang đến trải nghiệm độc đáo cho người chơi vào năm 2025.',
     likes: 142,
-    commentsEnabled: false,
-    sharesEnabled: false,
+    commentsEnabled: true,
+    sharesEnabled: true,
   },
 ];
 

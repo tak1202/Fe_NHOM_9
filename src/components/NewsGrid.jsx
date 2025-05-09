@@ -141,6 +141,12 @@ function NewsGrid() {
                 <button className="news-action-button">
                   <i className="far fa-thumbs-up"></i> 128
                 </button>
+                <button className="news-action-button">
+                  <i className="far fa-comment"></i> Bình luận
+                </button>
+                <button className="news-action-button">
+                  <i className="far fa-share-square"></i> Chia sẻ
+                </button>
               </div>
             </div>
           </div>
@@ -165,6 +171,12 @@ function NewsGrid() {
                 <button className="news-action-button">
                   <i className="far fa-thumbs-up"></i> 75
                 </button>
+                <button className="news-action-button">
+                  <i className="far fa-comment"></i> Bình luận
+                </button>
+                <button className="news-action-button">
+                  <i className="far fa-share-square"></i> Chia sẻ
+                </button>
               </div>
             </div>
           </div>
@@ -186,6 +198,12 @@ function NewsGrid() {
               <div className="news-actions">
                 <button className="news-action-button">
                   <i className="far fa-thumbs-up"></i> 87
+                </button>
+                <button className="news-action-button">
+                  <i className="far fa-comment"></i> Bình luận
+                </button>
+                <button className="news-action-button">
+                  <i className="far fa-share-square"></i> Chia sẻ
                 </button>
               </div>
             </div>
@@ -215,6 +233,9 @@ function NewsGrid() {
                 <button className="news-action-button">
                   <i className="far fa-comment"></i> Bình luận
                 </button>
+                <button className="news-action-button">
+                  <i className="far fa-share-square"></i> Chia sẻ
+                </button>
               </div>
             </div>
           </div>
@@ -236,6 +257,12 @@ function NewsGrid() {
               <div className="news-actions">
                 <button className="news-action-button">
                   <i className="far fa-thumbs-up"></i> 142
+                </button>
+                <button className="news-action-button">
+                  <i className="far fa-comment"></i> Bình luận
+                </button>
+                <button className="news-action-button">
+                  <i className="far fa-share-square"></i> Chia sẻ
                 </button>
               </div>
             </div>

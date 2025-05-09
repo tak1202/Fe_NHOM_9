@@ -3,19 +3,16 @@ import { useNavigate } from 'react-router-dom';
 function NewsItem({ news, large = false }) {
   const navigate = useNavigate();
 
-  // Điều hướng khi nhấn vào toàn bộ tin tức
   const handleNewsClick = () => {
     console.log('Navigating to:', `/news/${news.id}`);
     navigate(`/news/${news.id}`);
   };
 
-  // Điều hướng khi nhấn nút "Bình luận" (có thể giống handleNewsClick)
   const handleCommentClick = () => {
     console.log('Comment button clicked, navigating to:', `/news/${news.id}`);
     navigate(`/news/${news.id}`);
   };
 
-  // Kiểm tra prop news
   if (!news || !news.id) {
     console.error('Error: news prop is undefined or missing id', news);
     return <div>Error: No news data</div>;
@@ -44,7 +41,7 @@ function NewsItem({ news, large = false }) {
               <button
                 className="news-action-button"
                 onClick={(e) => {
-                  e.stopPropagation(); // Ngăn sự kiện click trên tin tức
+                  e.stopPropagation(); 
                   handleCommentClick();
                 }}
                 style={{ position: 'relative', zIndex: 1000 }}

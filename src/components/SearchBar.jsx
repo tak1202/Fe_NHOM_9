@@ -19,7 +19,6 @@ function SearchBar() {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchKey.trim()) {
-      // Chỉ thực hiện tìm kiếm nhanh
       navigate(`/search?q=${encodeURIComponent(searchKey)}`);
     }
   };
@@ -27,15 +26,12 @@ function SearchBar() {
   const handleAdvancedSearchSubmit = (e) => {
     e.preventDefault();
     
-    // Xây dựng query string từ các tiêu chí tìm kiếm nâng cao
     let queryParams = new URLSearchParams();
     
-    // Thêm từ khóa tìm kiếm (nếu có)
     if (searchKey.trim()) {
       queryParams.append("q", searchKey);
     }
     
-    // Thêm các tiêu chí tìm kiếm nâng cao
     if (advancedSearch.category) {
       queryParams.append("category", advancedSearch.category);
     }
@@ -49,7 +45,6 @@ function SearchBar() {
       queryParams.append("toDate", advancedSearch.toDate);
     }
     
-    // Chuyển hướng đến trang kết quả tìm kiếm với các tham số
     navigate(`/search?${queryParams.toString()}&advanced=true`);
   };
 
