@@ -1,33 +1,28 @@
 import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useFetchData } from '../hooks/useFetchData';
+
 
 function MenuNav() {
-  const categories = [
-    'Tin mới',
-    'Thời sự',
-    'Thế giới',
-    'Kinh doanh',
-    'Giải trí',
-    'Thể thao',
-    'Pháp luật',
-    'Giáo dục',
-    'Sức khỏe',
-    'Đời sống',
-    'Du lịch',
-    'Khoa học',
-    'Công nghệ',
-  ];
+  const { data, fetchData, isLoading } = useFetchData("loai-tin")
+
+  useEffect(() => {
+    fetchData()
+  }, []);
+
+  if (isLoading) return <nav className="menu-nav">Đang tải danh mục...</nav>;
 
   return (
     <nav className="menu-nav">
       <div className="menu-container">
         <ul className="menu-list">
-          {categories.map((category, index) => (
+          {data.map((category, index) => (
             <li key={index}>
               <NavLink
-                to={index === 0 ? '/' : category === 'Thời sự' ? '/thoi-su' : `/${category.toLowerCase()}`}
+                to={`/loai-tin/${category.id}`}
                 className={({ isActive }) => (isActive ? 'menu-item active' : 'menu-item')}
               >
-                {category}
+                {category.ten_loai_tin}
               </NavLink>
             </li>
           ))}

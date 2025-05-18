@@ -17,8 +17,8 @@ function App() {
       <MenuNav />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/news/:id" element={<News />} />
-        <Route path="/thoi-su" element={<NewsCatalog />} />
+        <Route path="/tin/:id" element={<News />} />
+        <Route path="/loai-tin/:id" element={<NewsCatalog />} />
         <Route path="/login" element={<Login />} />
         <Route path="/search/:keySearch" element={<SearchResults />} />
       </Routes>

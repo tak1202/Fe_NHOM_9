@@ -1,117 +1,80 @@
-import { useParams } from 'react-router-dom';
-import { useState } from 'react';
-import WeatherForecast from '../components/WeatherForecast';
-import CommentSection from './CommentSection';
-
-const newsData = [
-  {
-    id: 1,
-    title: 'Quân đội Việt Nam tìm kiếm các nạn nhân động đất Myanmar trong đống đổ nát',
-    source: 'VietnamPlus',
-    timestamp: '6 giờ trước',
-    category: 'Thời sự',
-    image: 'https://placehold.co/800x500/0078d7/ffffff?text=Cứu+hộ+động+đất',
-    description:
-      'Đội cứu hộ quân đội Việt Nam đã được điều động sang Myanmar để hỗ trợ công tác tìm kiếm và cứu nạn sau trận động đất kinh hoàng xảy ra tuần trước...',
-    likes: 327,
-    commentsEnabled: true,
-    sharesEnabled: true,
-  },
-  {
-    id: 2,
-    title: '5 thói quen giúp Elon Musk thành tỷ phú',
-    source: 'Ngôi sao',
-    timestamp: '4 ngày trước',
-    category: 'Doanh nhân',
-    image: 'https://placehold.co/400x300/f2f2f2/666666?text=Elon+Musk',
-    description:
-      'Elon Musk đã chia sẻ về những thói quen giúp ông đạt được thành công vang dội trong kinh doanh và công nghệ.',
-    likes: 128,
-    commentsEnabled: true,
-    sharesEnabled: true,
-  },
-  {
-    id: 3,
-    title: 'Thủ tướng tiếp 20 đại học hàng đầu Mỹ, đề xuất hợp tác đào tạo nhân lực',
-    source: 'Tuổi trẻ',
-    timestamp: '22 giờ trước',
-    category: 'Giáo dục',
-    image: 'https://placehold.co/400x300/f2f2f2/666666?text=Đại+học',
-    description:
-      'Thủ tướng đã có buổi gặp gỡ với đại diện 20 trường đại học hàng đầu Mỹ để thảo luận về hợp tác giáo dục...',
-    likes: 75,
-    commentsEnabled: true,
-    sharesEnabled: true,
-  },
-  {
-    id: 4,
-    title: 'Chính sách nổi bật có hiệu lực từ tháng 4/2025',
-    source: 'VnExpress',
-    timestamp: '14 giờ trước',
-    category: 'Pháp luật',
-    image: 'https://placehold.co/400x300/f2f2f2/666666?text=Chính+sách',
-    description:
-      'Một số chính sách mới sẽ có hiệu lực từ tháng 4, ảnh hưởng đến nhiều lĩnh vực trong đời sống xã hội.',
-    likes: 87,
-    commentsEnabled: true,
-    sharesEnabled: true,
-  },
-  {
-    id: 5,
-    title: '9 kiểu váy tối kỵ đối với phụ nữ tuổi 40',
-    source: 'VTC News',
-    timestamp: '5 ngày trước',
-    category: 'Thời trang',
-    image: 'https://placehold.co/800x500/f2f2f2/666666?text=Thời+trang',
-    description:
-      'Phong cách thời trang của phụ nữ sau tuổi 40 nên chú trọng vào sự thanh lịch và tinh tế...',
-    likes: 210,
-    commentsEnabled: true,
-    sharesEnabled: true,
-  },
-  {
-    id: 6,
-    title: 'Game xây dựng thành phố 2025 - Trải nghiệm mới',
-    source: 'Forge of Empires',
-    timestamp: '3 giờ trước',
-    category: 'Game',
-    image: 'https://placehold.co/400x300/f2f2f2/666666?text=Game',
-    description:
-      'Trò chơi xây dựng thành phố mới hứa hẹn mang đến trải nghiệm độc đáo cho người chơi vào năm 2025.',
-    likes: 142,
-    commentsEnabled: true,
-    sharesEnabled: true,
-  },
-];
+import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import CommentSection from './CommentSection'; // Bỏ comment import
+import { useFetchData } from '../hooks/useFetchData';
 
 function News() {
   const { id } = useParams();
-  const newsItem = newsData.find((item) => item.id === parseInt(id));
-  const [showComments, setShowComments] = useState(false); // State để hiển thị/ẩn CommentSection
+  const navigate = useNavigate();
+  console.log('News ID:', id); // Debug ID từ URL
+  const { data: newsData, fetchData: fetchNewsData, isLoading, error } = useFetchData(`tin/${id}`);
+  const [newsItem, setNewsItem] = useState(null);
+  const [showComments, setShowComments] = useState(false);
+  const { data: commentsData, fetchData: fetchCommentsData, isLoading: commentsLoading, error: commentsError } = useFetchData(`tin/${id}/binh-luan`, false);
 
-  // Kiểm tra id và newsItem
-  console.log('URL id:', id);
-  console.log('Found newsItem:', newsItem);
+  useEffect(() => {
+    fetchNewsData();
+  }, [id]);
 
-  if (!newsItem) {
-    return <div className="main-content">Tin tức không tồn tại</div>;
-  }
+  useEffect(() => {
+    console.log('Data from API:', newsData); // Debug dữ liệu từ API
+    if (newsData) {
+      const formattedItem = {
+        id: newsData.id || newsData._id || '',
+        title: newsData.tieu_de || 'Không có tiêu đề',
+        source: newsData.tac_gia || 'Nguồn không xác định',
+        timestamp: newsData.ngay_dang_tin || newsData.created_at || 'Thời gian không xác định',
+        category: newsData.loai_tin?.ten_loai_tin || 'Tổng hợp',
+        image: 'https://cdnmedia.baotintuc.vn/Upload/3qVxwVtNEPp6Wp9kkF77g/files/2024/03/30/kinh-te-300324-a.jpg',
+        description: newsData.mo_ta || 'Không có mô tả',
+        content: newsData.noi_dung || 'Không có nội dung',
+        likes: newsData.so_lan_xem || 0,
+        commentsEnabled: newsData.trang_thai !== false,
+        sharesEnabled: true,
+        hot: newsData.tin_hot || false,
+      };
+      console.log('Formatted newsItem:', formattedItem); // Debug dữ liệu sau định dạng
+      setNewsItem(formattedItem);
+    }
+  }, [newsData]);
 
-  // Hàm xử lý nhấn nút "Bình luận"
   const handleCommentToggle = () => {
-    console.log('Toggling comments, showComments:', !showComments);
+    if (!showComments && newsItem && newsItem.commentsEnabled) {
+      console.log('Calling fetchCommentsData for API:', `https://apiwebnews.onrender.com/api/tin/${id}/binh-luan`); // Debug
+      fetchCommentsData(); // Gọi fetchData cho bình luận
+    }
     setShowComments(!showComments);
   };
+
+  if (isLoading) {
+    return <div className="main-content">Đang tải tin tức...</div>;
+  }
+
+  if (error) {
+    return <div className="main-content">Lỗi: {error}</div>;
+  }
+
+  if (newsItem === null || !newsItem.id) {
+    return <div className="main-content">Tin tức không tồn tại hoặc không tải được</div>;
+  }
 
   return (
     <div className="main-content">
       <div className="news-container" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px' }}>
         <div className="news-item large">
-          <div className="trending-tag">
-            <i className="fas fa-fire"></i> Đang trending
-          </div>
+          {newsItem.hot && (
+            <div className="trending-tag">
+              <i className="fas fa-fire"></i> Đang trending
+            </div>
+          )}
           <div className="news-image">
-            <img src={newsItem.image} alt={newsItem.title} />
+            <img
+              src={newsItem.image}
+              alt={newsItem.title}
+              onError={(e) => {
+                e.target.src = 'https://placehold.co/800x500/0078d7/ffffff?text=Hình+không+tải+được';
+              }}
+            />
           </div>
           <div className="news-content">
             <div className="news-source">
@@ -123,6 +86,7 @@ function News() {
             </div>
             <h3 className="news-title">{newsItem.title}</h3>
             <p className="news-description">{newsItem.description}</p>
+            <div className="news-content-full" dangerouslySetInnerHTML={{ __html: newsItem.content }} />
             <div className="news-metadata">
               <div className="news-category">{newsItem.category}</div>
               <div className="news-actions">
@@ -142,9 +106,16 @@ function News() {
               </div>
             </div>
           </div>
-          {newsItem.commentsEnabled && showComments && <CommentSection newsId={newsItem.id} />}
+          {newsItem.commentsEnabled && showComments && (
+            <CommentSection
+              newsId={newsItem.id}
+              autoFetch={false} // Không tự động fetch, đã gọi fetchCommentsData trong handleCommentToggle
+              commentsData={commentsData}
+              isLoading={commentsLoading}
+              error={commentsError}
+            />
+          )}
         </div>
-        <WeatherForecast />
       </div>
     </div>
   );
