@@ -39,7 +39,7 @@ function Header() {
             <span>Đăng nhập</span>
           </button>
         )}
-        {/* <NotificationComponent /> */}
+        <NotificationComponent />
         <button className="icon-button">
           <i className="fas fa-th"></i>
         </button>
